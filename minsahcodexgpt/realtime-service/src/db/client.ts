@@ -1,4 +1,4 @@
-import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaPg } from '@prisma/pg'
 import { PrismaClient } from '../../prisma/generated/prisma/client'
 
 declare global {
