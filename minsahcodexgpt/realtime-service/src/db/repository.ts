@@ -1,3 +1,4 @@
+import { Prisma } from '../../prisma/generated/prisma/client'
 import { prisma } from './client'
 
 export interface SaveIncomingMessageInput {
@@ -20,7 +21,7 @@ export interface SaveOutgoingMessageInput {
 export async function upsertConversationAndSaveMessage(
   input: SaveIncomingMessageInput
 ): Promise<{ conversationId: string; messageId: string; isNew: boolean }> {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const existingConversation = await tx.fbConversation.findUnique({
       where: { threadId: input.customerPsid },
       select: { id: true },
@@ -83,7 +84,7 @@ export async function saveOutgoingMessage(
   input: SaveOutgoingMessageInput,
   agentSenderId: string
 ): Promise<{ conversationId: string; messageId: string }> {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const conversation = await tx.fbConversation.upsert({
       where: { threadId: input.customerPsid },
       update: {

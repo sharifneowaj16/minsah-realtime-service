@@ -24,7 +24,7 @@ export class InboxWsServer {
     this.wss = new WebSocketServer({
       server,
       path: '/ws',
-      verifyClient: ({ req }) => {
+      verifyClient: ({ req }: { req: import('http').IncomingMessage }) => {
         const url = new URL(req.url ?? '/', 'http://localhost')
         return url.searchParams.get('token') === getConfig().WS_AUTH_SECRET
       },
