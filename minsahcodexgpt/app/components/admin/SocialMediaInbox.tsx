@@ -372,7 +372,7 @@ export default function SocialMediaInbox({
     document.addEventListener('visibilitychange', handleVisibility);
     return () => {
       document.removeEventListener('visibilitychange', handleVisibility);
-      eventSource?.close();
+      (eventSource as EventSource | null)?.close();
       if (fallbackTimer) clearInterval(fallbackTimer);
       if (retryTimeout) clearTimeout(retryTimeout);
     };
